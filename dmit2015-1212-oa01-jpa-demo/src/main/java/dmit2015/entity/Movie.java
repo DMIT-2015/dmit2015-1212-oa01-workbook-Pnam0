@@ -55,14 +55,13 @@ public class Movie implements Serializable {
     private Integer version;
 
     @Column(nullable = false)
-    private LocalDateTime createdDateTime;
+    private LocalDateTime createdDateTime = LocalDateTime.now();
 
     @Column(nullable = false)
     private LocalDateTime lastModifiedDateTime;
 
     @PrePersist
     private void beforePersist() {
-        createdDateTime = LocalDateTime.now();
         lastModifiedDateTime = createdDateTime;
     }
 
