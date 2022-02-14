@@ -8,7 +8,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 
 @Entity
-@Getter @Setter
+@Getter
+@Setter
 @NoArgsConstructor
 public class TodoItem {
 

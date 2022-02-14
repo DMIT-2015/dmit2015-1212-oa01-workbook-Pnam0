@@ -8,13 +8,15 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+
 import java.io.File;
 import java.io.InputStream;
 
 /**
- *  curl -k -i -X GET https://localhost:8443/dmit2015-1212-jaxrs-demo/webapi/helloworld -H 'Accept: text/plain'
+ * curl -k -i -X GET https://localhost:8443/dmit2015-1212-jaxrs-demo/webapi/helloworld -H 'Accept: text/plain'
  * curl -k -i -X GET https://localhost:8443/dmit2015-1212-jaxrs-demo/webapi/helloworld -H 'Accept: text/html'
  * curl -k -i -X GET https://localhost:8443/dmit2015-1212-jaxrs-demo/webapi/helloworld -H 'Accept: application/json'
+ * curl -k -i -X GET https://localhost:8443/dmit2015-1212-jaxrs-demo/webapi/helloworld/image
  */
 
 @RequestScoped
@@ -35,20 +37,27 @@ public class HelloWorldResource {
         String message = "<p>Hello World from <strong>JAX-RS</strong>";
         return Response.ok(message).build();
     }
+
     @GET
     @Produces(MediaType.APPLICATION_JSON)   // "application/json"
     public Response helloWorldJson() {
         String message = "{\"message\":\"Hello World from JAX-RS\"}";
         return Response.ok(message).build();
     }
+
     @Path("/image")
     @GET
-    @Produces("text/image")
+    @Produces("image/png")
     public Response helloImage(@Context HttpServletRequest request) {
+        //Used to retrieve files in the source project
         InputStream is = getClass().getResourceAsStream("/images/hello_world.png");
-        return Response
-                .ok(is)
-                .header("Content-Disposition","attachment; filename=hello_world.png")
+        return Response.ok(is)
+                .header("Content-Disposition", "attachment; filename=hello_world.png")
                 .build();
+//        File imageFile = new File("/home/user2015/Pictures/hello_world.png");
+//        return Response
+//                .ok(imageFile)
+//                .header("Content-Disposition","attachment; filename=hello_world.png")
+//                .build();    }
     }
 }
